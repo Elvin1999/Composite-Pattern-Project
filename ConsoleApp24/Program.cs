@@ -136,7 +136,7 @@ namespace ConsoleApp24
             region.Add(agency); region.Add(agency2);
             City city = new City("London");
             city.Add(region); city.Add(region2);
-            Console.WriteLine(city.GetPoll());
+            Console.WriteLine($"All polls are {city.GetPoll()} in {city.Name}");
         }
     }
 }
