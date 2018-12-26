@@ -16,15 +16,10 @@ namespace ConsoleApp24
     {
         public string Name { get; set; }
         public int Mypool { get; set; }
-        List<IPoll> polls = new List<IPoll>();
         public Agency(string name, int mypool)
         {
             Name = name;
             Mypool = mypool;
-        }
-        public void Add(IPoll poll)
-        {
-            polls.Add(poll);
         }
 
         public int GetPoll()
@@ -33,11 +28,15 @@ namespace ConsoleApp24
             return Mypool;
         }
 
-        public bool Remove(IPoll poll)
+        public void Add(IPoll poll)
         {
-            return polls.Remove(poll);
+            throw new NotImplementedException();
         }
 
+        public bool Remove(IPoll poll)
+        {
+            throw new NotImplementedException();
+        }
     }
     class Region : IPoll
     {
@@ -100,16 +99,23 @@ namespace ConsoleApp24
     {
         static void Main(string[] args)
         {
-
-            Agency agency = new Agency("Agency1",20);
+            Agency agency = new Agency("Agency1", 20);
             Agency agency2 = new Agency("Agency1", 25);
             Region region = new Region("Wall st");
-            region.Add(agency); region.Add(agency2);
             Region region2 = new Region("Wall st2");
-            region.Add(agency); region.Add(agency2);
             City city = new City("London");
-            city.Add(region); city.Add(region2);
-            Console.WriteLine($"All polls are {city.GetPoll()} in {city.Name}");
+            try
+            {
+                region.Add(agency); region.Add(agency2);
+                region.Add(agency); region.Add(agency2);
+                city.Add(region); city.Add(region2);
+                Console.WriteLine($"All polls are {city.GetPoll()} in {city.Name}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
         }
     }
 }
