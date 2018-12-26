@@ -9,34 +9,19 @@ namespace ConsoleApp24
     interface IPoll
     {
         void Add(IPoll poll);
-        void Remove(IPoll poll);
+        bool Remove(IPoll poll);
         int GetPoll();
     }
-    class Poll : IPoll
-    {        
-        public void Add(IPoll poll)
-        {
-            throw new NotImplementedException();
-        }
-        public int GetPoll()
-        {
-            return 1;
-        }
-        public void Remove(IPoll poll)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     class Agency : IPoll
     {
+        public string Name { get; set; }
+        public int Mypool { get; set; }
         List<IPoll> polls = new List<IPoll>();
-        public Agency(string name)
+        public Agency(string name, int mypool)
         {
             Name = name;
+            Mypool = mypool;
         }
-        public string Name { get; set; }
-
         public void Add(IPoll poll)
         {
             polls.Add(poll);
@@ -44,18 +29,15 @@ namespace ConsoleApp24
 
         public int GetPoll()
         {
-            int sum = 0;
-            for (int i = 0; i < polls.Count; i++)
-            {
-                sum += polls[i].GetPoll();
-            }
-            return sum;
+
+            return Mypool;
         }
 
-        public void Remove(IPoll poll)
+        public bool Remove(IPoll poll)
         {
-            polls.Remove(poll);
+            return polls.Remove(poll);
         }
+
     }
     class Region : IPoll
     {
@@ -74,12 +56,11 @@ namespace ConsoleApp24
             }
             return sum;
         }
-        public void Remove(IPoll poll)
+        public bool Remove(IPoll poll)
         {
-            polls.Remove(poll);
+            return polls.Remove(poll);
         }
-        List<IPoll> polls = new List<IPoll>()
-;
+        List<IPoll> polls = new List<IPoll>();
 
         public Region(string name)
         {
@@ -105,9 +86,9 @@ namespace ConsoleApp24
             return sum;
         }
 
-        public void Remove(IPoll poll)
+        public bool Remove(IPoll poll)
         {
-            polls.Remove(poll);
+            return polls.Remove(poll);
         }
         List<IPoll> polls = new List<IPoll>();
         public City(string name)
@@ -119,19 +100,11 @@ namespace ConsoleApp24
     {
         static void Main(string[] args)
         {
-            Poll poll = new Poll();
-            Agency agency = new Agency("Agency");
-            for (int i = 0; i < 10; i++)
-            {
-                agency.Add(poll);
-            }
-            Agency agency2 = new Agency("Agency2");
-            for (int i = 0; i < 10; i++)
-            {
-                agency2.Add(poll);
-            }
+
+            Agency agency = new Agency("Agency1",20);
+            Agency agency2 = new Agency("Agency1", 25);
             Region region = new Region("Wall st");
-            region.Add(agency);region.Add(agency2);
+            region.Add(agency); region.Add(agency2);
             Region region2 = new Region("Wall st2");
             region.Add(agency); region.Add(agency2);
             City city = new City("London");
